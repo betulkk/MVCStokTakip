@@ -1,0 +1,74 @@
+﻿@model stokTakipUygulamasi.Models.Entity.Kullanicilar
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Kaydol</title>
+    <link href="~/Scripts/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/styledanger.css" rel="stylesheet" />
+</head>
+<body class="container col-md-7">
+    <br />
+    @using (Html.BeginForm("Kaydol", "Kullanicilar", FormMethod.Post))
+    {
+        <div style="height:50px;background-color:bisque;color:brown;text-align:center">
+            <p style="margin-top:auto;margin-bottom:auto;font-size:30px;">Kullanıcı Kayıt</p>
+        </div>
+        <div style="margin-top:20px;">
+            @Html.LabelFor(x => x.KullaniciAdi)
+            @Html.TextBoxFor(x => x.KullaniciAdi, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.KullaniciAdi, null, new { @class = "text-danger" })
+        </div>
+        <div style="margin-top:20px;">
+            @Html.LabelFor(x => x.Sifre)
+            @Html.PasswordFor(x => x.Sifre, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Sifre, null, new { @class = "text-danger" })
+        </div>
+        <div style="margin-top:20px;">
+            @Html.LabelFor(x => x.AdSoyad)
+            @Html.TextBoxFor(x => x.AdSoyad, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.AdSoyad, null, new { @class = "text-danger" })
+        </div>
+        <div style="margin-top:20px;">
+            @Html.LabelFor(x => x.eMail)
+            @Html.TextBoxFor(x => x.eMail, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.eMail, null, new { @class = "text-danger" })
+        </div>
+        <div style="margin-top:20px;">
+            @Html.LabelFor(x => x.Telefon)
+            @Html.TextBoxFor(x => x.Telefon, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Telefon, null, new { @class = "text-danger" })
+        </div>
+
+        <div style="margin-top:20px;">
+            <button class="btn btn-primary form-control">Kaydol</button>
+        </div>
+    }
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div style="margin-top:40px"></div>
+
+            <div class="copyright float-right">
+                ©
+                <script>document.write(new Date().getFullYear())</script>, Stok Takip Otomasyonu made by Grup2.
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+</html>
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+

@@ -1,0 +1,99 @@
+﻿@model stokTakipUygulamasi.Models.Entity.Urunler
+
+@{
+    ViewBag.Title = "UrunEkle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    @using (Html.BeginForm("UrunEkle", "Urunler", FormMethod.Post))
+    {
+        <div class="form-group">
+
+            @Html.LabelFor(x => x.Kategoriler.Kategori)
+            @Html.DropDownListFor(x => x.KategoriID, Model.KategoriListesi, "Seçiniz", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.KategoriID, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+
+            @Html.LabelFor(x => x.Markalar.Marka)
+            @Html.DropDownListFor(x => x.MarkaID, Model.MarkalarListesi, "Seçiniz", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.MarkaID, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.UrunAdi)
+            @Html.TextBoxFor(x => x.UrunAdi, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.UrunAdi, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.UrunStok)
+            @Html.TextBoxFor(x => x.UrunStok, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.UrunStok, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.AlisFiyati)
+            @Html.TextBoxFor(x => x.AlisFiyati, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.AlisFiyati, "", new { @class = "text-danger" })
+
+        </div>
+
+
+
+
+        <div style="margin-top:20px"></div>
+        <button class="btn btn-info">Ürün Ekle</button>
+        <div />
+
+
+    }
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#KategoriID").change(function () {
+
+                var id = $("#KategoriID").val();
+                var markalist = $("#MarkaID");
+                markalist.empty();
+                $.ajax({
+                    url: '/Urun/MarkaGetir',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { ID: id },
+                    success: function (data) {
+                        $.each(data, function (index, option) {
+                            markalist.append('<option value=' + option.Value + '>' + option.Text + '<option')
+                        });
+                    }
+                });
+
+            });
+        });
+
+
+    </script>
+
+
+
+}
+
+
+@section scriptdanger
+{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    @*<script src="~/Scripts/ondalikliSayi.js"></script>*@
+}
+
+

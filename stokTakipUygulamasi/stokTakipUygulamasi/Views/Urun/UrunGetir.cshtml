@@ -1,0 +1,111 @@
+﻿
+@model stokTakipUygulamasi.Models.Entity.Urunler
+
+@{
+    ViewBag.Title = "UrunGetir";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    @using (Html.BeginForm("UrunGuncelle", "Urun", FormMethod.Post))
+    {
+
+        @Html.HiddenFor(x => x.id)
+        @Html.HiddenFor(x => x.BarkodNO)
+        @Html.HiddenFor(x => x.Tarih)
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Kategoriler.Kategori, "KATEGORİ")
+            @Html.DropDownListFor(x => x.KategoriID, Model.KategoriListesi, "Seçiniz", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.KategoriID, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Markalar.Marka, "MARKA")
+            @Html.DropDownListFor(x => x.MarkaID, Model.MarkalarListesi, "Seçiniz", new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.MarkaID, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.UrunAdi, "ÜRÜN ADI")
+            @Html.TextBoxFor(x => x.UrunAdi, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.UrunAdi, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.UrunStok, "ÜRÜN STOK ADETİ")
+            @Html.TextBoxFor(x => x.UrunStok, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.UrunStok, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.AlisFiyati, "ÜRÜN FİYATI")
+            @Html.TextBoxFor(x => x.AlisFiyati, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.AlisFiyati, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Aciklama, "AÇIKLAMA")
+            @Html.TextAreaFor(x => x.Aciklama, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Aciklama, "", new { @class = "text-danger" })
+
+        </div>
+
+
+
+        <div>
+            <button class="btn btn-primary">ÜRÜN GÜNCELLE</button>
+        </div>
+
+
+
+
+    }
+</div>
+
+
+@section scriptdanger
+{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/ondalikliSayi.js"></script>
+
+}
+
+@section scripts
+
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#KategoriID").change(function () {
+
+                var id = $("#KategoriID").val();
+                var markalist = $("#MarkaID");
+                markalist.empty();
+                $.ajax({
+                    url: '/Urun/MarkaGetir',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { ID: id },
+                    success: function (data) {
+                        $.each(data, function (index, option) {
+                            markalist.append('<option value=' + option.Value + '>' + option.Text + '<option')
+                        });
+                    }
+                });
+
+            });
+        });
+
+
+    </script>
+
+
+}

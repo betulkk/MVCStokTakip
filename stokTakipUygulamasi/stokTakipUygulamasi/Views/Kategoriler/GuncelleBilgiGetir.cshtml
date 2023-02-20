@@ -1,0 +1,42 @@
+﻿@model stokTakipUygulamasi.Models.Entity.Kategoriler
+
+@{
+    ViewBag.Title = "GuncelleBilgiGetir";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <form action="/Kategoriler/KategoriGuncelle/">
+        @*<div class="form-group">
+                <b>ID</b>
+                @Html.TextBoxFor(x => x.id, new { @class = "form-control" })
+            </div>*@
+        @Html.HiddenFor(x => x.id)
+
+        <div class="form-group">
+            <b>Kategori</b>
+            @Html.TextBoxFor(x => x.Kategori, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Kategori, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group">
+            <b>Açıklama</b>
+            @Html.TextBoxFor(x => x.Aciklama, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Aciklama, "", new { @class = "text-danger" })
+
+        </div>
+        <div>
+            <button class="btn btn-primary">KATEGORİ GÜNCELLE</button>
+        </div>
+
+    </form>
+</div>
+
+
+@section scriptdanger
+{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+}
+

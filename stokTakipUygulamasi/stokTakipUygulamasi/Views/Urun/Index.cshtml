@@ -1,0 +1,85 @@
+﻿@using stokTakipUygulamasi.Models.Entity
+
+@model List<stokTakipUygulamasi.Models.Entity.Urunler>
+
+@*@model List<stokTakipUygulamasi.Models.Entity.Kategoriler>*@
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            <div style="width:25%;float:left">
+                @Html.TextBox("arama", null, new { @class = "form-control", @placeholder = "Aranacak ürün adı veya barkod Numarası" })
+
+            </div>
+            <div style="float:left;margin-left:5px">
+                @Html.ActionLink("Ara", "Index", null, new { @class = "btn btn-info", onclick = "$(this).parents('form').attr('action',$(this).attr('href'));$(this).parents('form').submit();return false;" })
+            </div>
+        </div>
+    }
+</div>
+<table class="table table-bordered">
+    <thead style="background-color:aqua">
+
+        <tr>
+            <th>ÜRÜN ID</th>
+            <th>BARKOD NUMARASI</th>
+            <th>ÜRÜN KATEGORİSİ</th>
+            <th>ÜRÜN MARKASI</th>
+            <th>ÜRÜN ADI</th>
+            <th>STOK</th>
+            <th>ÜRÜN FİYATI</th>
+            <th>ÜRÜN KAYIT TARİHİ</th>
+            <th>ÜRÜN AÇIKLAMASI</th>
+            <th>SİL</th>
+            <th>GÜNCELLE</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+        @foreach (var urun in Model)
+        {
+            <tr>
+
+                <th>@Html.DisplayFor(x => urun.id)</th>
+                <td>@Html.DisplayFor(x => urun.BarkodNO)</td>
+                <td>@Html.DisplayFor(x => urun.Kategoriler.Kategori)</td>
+                <td>@Html.DisplayFor(x => urun.Markalar.Marka)</td>
+                <td>@Html.DisplayFor(x => urun.UrunAdi)</td>
+                <td>@Html.DisplayFor(x => urun.UrunStok)</td>
+                <td>@Html.DisplayFor(x => urun.AlisFiyati)</td>
+                <td>@Html.DisplayFor(x => urun.Tarih)</td>
+                <td>@Html.DisplayFor(x => urun.Aciklama)</td>
+                <td>@Html.ActionLink("SİL", "SİL", new { id = urun.id }, new { @class = "btn btn-danger" })</td>
+                <td>@Html.ActionLink("GÜNCELLE", "UrunGetir", new { id = urun.id }, new { @class = "btn btn-success" })</td>
+            </tr>
+
+
+        }
+    </tbody>
+
+</table>
+
+<div class="form-group container">
+    <div style="float:left">
+        @if (User.IsInRole("yönetici"))
+        {
+            <a href="/Urun/UrunEkle/" class="btn btn-primary">YENİ ÜRÜN EKLE</a>
+        }
+    </div>
+    @*<div style="float:right">
+        <a href="@Url.Action("ExcelAktar","Urun")" class="btn btn-dark">Excel'e Aktar</a>
+    </div>*@
+
+</div>
+
+
+
+

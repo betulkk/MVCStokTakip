@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stok Takip Otomasyonu</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="~/css/styledanger.css" rel="stylesheet" />
+</head>
+<body>
+
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">StokTakipOtomasyonu</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Anasayfa</a></li>
+                @if (User.IsInRole("yönetici")) //başka rol de eklersen ||user.isinrole("diğerrol") ekle*@
+                {
+                    <li><a href="/Kategoriler/Index/">Kategoriler</a></li>
+                    <li><a href="/Markalar/Index/">Markalar</a></li>
+                }
+                <li><a href="/Urun/Index/">Ürünler</a></li>
+                @*<li><a href="#">Müşteriler</a></li>
+                    <li><a href="#">Satın Alma</a></li>*@
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Kullanicilar/Logout/">Çıkış</a></li>
+                <li><a style="color:ActiveBorder">@User.Identity.Name</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    @section scripts
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#KategoriID").change(function () {
+                    var ID = $("#KategoriID").val();
+                    var markalist = $("#MarkaID");
+                    markalist.empty();
+                    $.ajax({
+                        url: '/Urunler/GetMarka/',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { 'id2': ID },
+                        success: function (data) {
+                            $.each(data, function (index, option) {
+                                markalist.append('<option value=' + option.Value + '>' + option.Text + '</option>')
+                            });
+                        }
+                    });
+                });
+            });
+        </script>
+    }
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div style="margin-top:40px"></div>
+
+            <div class="copyright float-right">
+                ©
+                <script>document.write(new Date().getFullYear())</script>, Stok Takip Otomasyonu made by Grup2.
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+
+    @RenderSection("scriptdanger", false)
+    @RenderSection("scripts", false)
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+﻿@using stokTakipUygulamasi.Models.Entity
+
+@model List<stokTakipUygulamasi.Models.Entity.Markalar>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-bordered">
+    <thead style="background-color:aqua">
+        <tr>
+            <th>ID</th>
+            <th>Kategori</th>
+            <th>Marka</th>
+            <th>Açıklama</th>
+            <th>SİL</th>
+            <th>GÜNCELLE</th>
+
+        </tr>
+    </thead>
+
+
+    <tbody>
+        @foreach (var marka in Model)
+        {
+            <tr>
+                <td>@marka.id</td>
+                <td>@marka.Kategoriler.Kategori</td>
+                <td>@marka.Marka</td>
+                <td>@marka.Aciklama</td>
+                <td>
+                    <a href="/Markalar/SİL/@marka.id" class="btn btn-danger">SİL</a>
+                </td>
+                <td>
+                    <a href="/Markalar/MarkaGetir/@marka.id" class="btn btn-success">GÜNCELLE</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="/Markalar/MarkaEkle/" class="btn btn-primary">YENİ MARKA EKLE</a>
